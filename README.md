@@ -56,8 +56,41 @@ After the data is inserted, various SQL queries can be written to explore and an
 
 ### Advanced Level
 1. Find the top 3 most-viewed tracks for each artist using window functions.
-2. Write a query to find tracks where the liveness score is above the average.
-3. **Use a `WITH` clause to calculate the difference between the highest and lowest LOUDNESS values for tracks in each album.**
+  ```sql
+ with Artist_ranking
+   as
+(Select 
+Artist,
+track,
+sum(views) as Total_view,
+Dense_rank() OVER(partition by Artist 
+order by sum(views)DESC) as Ranking 
+ from spotify 
+group by 1,2
+ order by 1,3 Desc) 
+select *  from Artist_ranking
+where ranking <=3;
+
+
+
+3. Write a query to find tracks where the liveness score is above the average.Top 5 tracks with liveness greater than the average ??
+   ```sql
+   SELECT 
+    track, aRtist, liveness
+FROM
+    spotify
+WHERE
+    liveness > (SELECT 
+            AVG(Liveness)
+        FROM
+            spotify) 
+ORDER BY 
+    Liveness DESC
+LIMIT 5;
+```
+   
+
+4. **Use a `WITH` clause to calculate the difference between the highest and lowest LOUDNESS values for tracks in each album.**
 ```sql
 WITH cte
 AS
