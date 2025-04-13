@@ -73,7 +73,7 @@ where ranking <=3;
 
 
 
-3. Write a query to find tracks where the liveness score is above the average.Top 5 tracks with liveness greater than the average ??
+3. **Write a query to find tracks where the liveness score is above the average.Top 5 tracks with liveness greater than the average.**
    ```sql
    SELECT 
     track, aRtist, liveness
